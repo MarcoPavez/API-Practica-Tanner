@@ -1,8 +1,13 @@
+using Microsoft.EntityFrameworkCore;
+using practica_asp.net.Models;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddDbContext<CsharpApiContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("cadenaSQL")));
 
 var app = builder.Build();
 
