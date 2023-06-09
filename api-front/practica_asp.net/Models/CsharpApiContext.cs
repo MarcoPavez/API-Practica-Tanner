@@ -18,7 +18,7 @@ public partial class CsharpApiContext : DbContext
 
     public virtual DbSet<Categoria> Categoria { get; set; }
 
-    public virtual DbSet<Producto> Productos { get; set; }
+    public virtual DbSet<Producto.Producto> Productos { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -37,7 +37,7 @@ public partial class CsharpApiContext : DbContext
                 .IsUnicode(false);
         });
 
-        modelBuilder.Entity<Producto>(entity =>
+        modelBuilder.Entity<Producto.Producto>(entity =>
         {
             entity.HasKey(e => e.IdProducto).HasName("PK__producto__098892103529FDE7");
 
