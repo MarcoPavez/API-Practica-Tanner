@@ -23,13 +23,14 @@ namespace practica_asp.net.Controllers
         {
             List<BaseUsuario> usuarioList = new List<BaseUsuario>();
             HttpResponseMessage response = _httpClient.GetAsync(_httpClient.BaseAddress + "/usuario").Result;
-            
-            if(response.IsSuccessStatusCode)
+
+            if (response.IsSuccessStatusCode)
             {
                 string data = response.Content.ReadAsStringAsync().Result;
                 usuarioList = JsonConvert.DeserializeObject<List<BaseUsuario>>(data);
             }
-            
+
+            return Ok(usuarioList);
         }
     }
 }
