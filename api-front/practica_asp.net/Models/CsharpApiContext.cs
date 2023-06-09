@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
+using practica_asp.net.Models.Producto;
 
 namespace practica_asp.net.Models;
 

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace practica_asp.net.Models;
+namespace practica_asp.net.Models.Producto;
 
 public partial class Categoria
 {
