@@ -2,6 +2,8 @@
 using Newtonsoft.Json;
 using practica_asp.net.Models;
 using practica_asp.net.Models.Usuario;
+using System.Collections.Generic;
+using System.Net.Http;
 
 namespace practica_asp.net.Controllers
 {
@@ -9,28 +11,29 @@ namespace practica_asp.net.Controllers
     [ApiController]
     public class UsuarioController : ControllerBase
     {
-        Uri baseAddress = new Uri("https://randomuser.me/api/");
         private readonly HttpClient _httpClient;
 
         public UsuarioController()
         {
             _httpClient = new HttpClient();
-            _httpClient.BaseAddress = baseAddress;
+            _httpClient.BaseAddress = new Uri("https://randomuser.me/api/");
         }
-
 
         public IActionResult Index()
         {
-            List<BaseUsuario> usuarioList = new List<BaseUsuario>();
-            HttpResponseMessage response = _httpClient.GetAsync(_httpClient.BaseAddress + "/usuario").Result;
+            List<Result> usuarioList = new List<Result>();
+            HttpResponseMessage response = _httpClient.GetAsync("").Result;
 
             if (response.IsSuccessStatusCode)
             {
                 string data = response.Content.ReadAsStringAsync().Result;
-                usuarioList = JsonConvert.DeserializeObject<List<BaseUsuario>>(data);
+                var rootObject = JsonConvert.DeserializeObject<BaseUsuario>(data);
+                usuarioList = rootObject.Results;
             }
 
             return Ok(usuarioList);
         }
     }
 }
+
+
