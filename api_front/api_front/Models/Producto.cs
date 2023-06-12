@@ -18,4 +18,6 @@ public partial class Producto
     public decimal? Precio { get; set; }
 
     public virtual Categoria? IdCategoriaNavigation { get; set; }
+
+    public virtual ICollection<OrdenCompra> OrdenCompras { get; set; } = new List<OrdenCompra>();
 }

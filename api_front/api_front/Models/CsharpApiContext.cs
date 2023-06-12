@@ -17,13 +17,14 @@ public partial class CsharpApiContext : DbContext
 
     public virtual DbSet<Categoria> Categoria { get; set; }
 
+    public virtual DbSet<OrdenCompra> OrdenCompras { get; set; }
+
     public virtual DbSet<Producto> Productos { get; set; }
 
     public virtual DbSet<Usuario> Usuarios { get; set; }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("");
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) { 
+    }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -36,6 +37,25 @@ public partial class CsharpApiContext : DbContext
             entity.Property(e => e.Descripcion)
                 .HasMaxLength(50)
                 .IsUnicode(false);
+        });
+
+        modelBuilder.Entity<OrdenCompra>(entity =>
+        {
+            entity.HasKey(e => e.IdOrden).HasName("PK__orden_co__33F95B58BE48BFE9");
+
+            entity.ToTable("orden_compra");
+
+            entity.Property(e => e.IdOrden).HasColumnName("Id_orden");
+            entity.Property(e => e.IdProducto).HasColumnName("Id_producto");
+            entity.Property(e => e.IdUsuario).HasColumnName("Id_usuario");
+
+            entity.HasOne(d => d.IdProductoNavigation).WithMany(p => p.OrdenCompras)
+                .HasForeignKey(d => d.IdProducto)
+                .HasConstraintName("FK_orden_compra_producto");
+
+            entity.HasOne(d => d.IdUsuarioNavigation).WithMany(p => p.OrdenCompras)
+                .HasForeignKey(d => d.IdUsuario)
+                .HasConstraintName("FK_orden_compra_usuario");
         });
 
         modelBuilder.Entity<Producto>(entity =>
